@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Readlife</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f4f1ea}
+header{background:#553b08;color:white;padding:15px 25px;display:flex;justify-content:space-between}
+.logo{font-size:32px;font-weight:bold}
+button{cursor:pointer}
+#app{display:none}
+.auth{max-width:500px;margin:60px auto;background:white;padding:30px;border-radius:12px;box-shadow:0 0 10px rgba(0,0,0,.15)}
+input,select{width:100%;padding:10px;margin:6px 0}
+.btn{background:#553b08;color:white;border:none;padding:12px;border-radius:8px}
+.layout{display:flex;gap:20px;padding:20px}
+.sidebar,.contentCard{background:white;border-radius:10px;padding:20px}
+.sidebar{width:260px}
+.content{flex:1}
+.search{display:flex;gap:10px;margin-bottom:20px}
+.search input{flex:1}
+.grid{display:flex;flex-wrap:wrap;gap:16px}
+.book{width:170px;background:#fff;padding:10px;border-radius:10px;text-align:center}
+.cover{height:220px;background:#d8c7a3;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:bold}
+.review{border-top:1px solid #ddd;padding-top:10px;margin-top:10px}
+.shelf{margin-bottom:10px}
+.badge{background:#eee;padding:4px 8px;border-radius:12px}
+</style>
+</head>
+<body>
+
+<div id="login" class="auth">
+<h1>📚 Readlife</h1>
+<p>Discover books you'll love.</p>
+<input id="username" placeholder="Username">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button class="btn" onclick="login()">Create Account / Sign In</button>
+</div>
+
+<div id="app">
+<header>
+<div class="logo">📚 Readlife</div>
+<div>Home | My Books | Reviews | Community</div>
+</header>
+
+<div class="layout">
+<div class="sidebar">
+<h2>👤 Profile</h2>
+<p id="welcome"></p>
+<p>Reading Goal: 60</p>
+
+<h3>📚 Shelves</h3>
+<div class="shelf">Want To Read <span class="badge">0</span></div>
+<div class="shelf">Currently Reading <span class="badge">0</span></div>
+<div class="shelf">Finished <span class="badge">0</span></div>
+</div>
+
+<div class="content">
+<div class="contentCard">
+<h2>🔍 Search Books</h2>
+<div class="search">
+<input id="searchBox" placeholder="Search...">
+<button class="btn" onclick="searchBooks()">Search</button>
+</div>
+<div id="searchResult"></div>
+</div>
+
+<div class="contentCard" style="margin-top:20px">
+<h2>🔥 Featured Books</h2>
+<div class="grid" id="books"></div>
+</div>
+
+<div class="contentCard" style="margin-top:20px">
+<h2>📝 Popular Reviews</h2>
+<div class="review"><b>DragonReader</b> ⭐⭐⭐⭐⭐<br>Eragon is an epic fantasy adventure.</div>
+<div class="review"><b>WizardFan</b> ⭐⭐⭐⭐⭐<br>Harry Potter never gets old.</div>
+<div class="review"><b>MazeRunner42</b> ⭐⭐⭐⭐<br>Fast-paced and mysterious.</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+const books=[
+"Eragon","Eldest","Brisingr","Inheritance",
+"Harry Potter","The Maze Runner","Skyward",
+"The Graveyard Book","Ready Player One",
+"A Wizard of Earthsea","Magnus Chase","Percy Jackson"
+];
+
+function login(){
+ const name=document.getElementById('username').value || 'Reader';
+ document.getElementById('welcome').innerText='Welcome, '+name+'!';
+ document.getElementById('login').style.display='none';
+ document.getElementById('app').style.display='block';
+ loadBooks();
+}
+
+function loadBooks(){
+ const area=document.getElementById('books');
+ area.innerHTML='';
+ books.forEach(book=>{
+   area.innerHTML += `
+   <div class="book">
+      <div class="cover">${book}</div>
+      <h4>${book}</h4>
+      <div>⭐⭐⭐⭐⭐</div>
+      <button class="btn" onclick="alert('Added '+ '${book}' +' to Want To Read')">Want To Read</button>
+   </div>`;
+ });
+}
+
+function searchBooks(){
+ const q=document.getElementById('searchBox').value.toLowerCase();
+ const found=books.filter(b=>b.toLowerCase().includes(q));
+ document.getElementById('searchResult').innerHTML =
+ found.length ? 'Found: '+found.join(', ') : 'No books found.';
+}
+</script>
+
+</body>
+</html>
